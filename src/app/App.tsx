@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Hello } from './components/Hello';
+import MainFrame from "./components/MainFrame";
 
 declare let module: any // for hotreloader
 
 ReactDOM.render(
-  <Hello compiler="Typescript" framework="React" bundler="Webpack" />,
+  <MainFrame/>,
   document.getElementById('root')
 );
 

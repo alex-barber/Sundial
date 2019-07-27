@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "ffa24a2930e11ade68c8";
+/******/ 	var hotCurrentHash = "359f9991443da80044de";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -26951,7 +26951,7 @@ var Hello = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Hello.prototype.render = function () {
-        return React.createElement("h1", null,
+        return React.createElement("h1", { className: 'test' },
             "This is a ",
             this.props.framework,
             " application using    ",
