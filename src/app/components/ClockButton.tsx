@@ -55,6 +55,14 @@ export class ClockButton extends React.Component<
           {this.state.status ? 'STOP' : 'START'}
         </button>
         <button onClick={this.handleReset}>RESET</button>
+        {this.state.runningTime && !this.state.status ?
+        < form >
+        FILL ME IN
+          </form> :
+            <div></div>
+
+
+        }
       </div>
     );
   }

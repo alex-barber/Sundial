@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "359f9991443da80044de";
+/******/ 	var hotCurrentHash = "286a8090692076feda79";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -26912,8 +26912,8 @@ module.exports = function(module) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-var Hello_1 = __webpack_require__(/*! ./components/Hello */ "./src/app/components/Hello.tsx");
-ReactDOM.render(React.createElement(Hello_1.Hello, { compiler: "Typescript", framework: "React", bundler: "Webpack" }), document.getElementById('root'));
+var MainFrame_1 = __webpack_require__(/*! ./components/MainFrame */ "./src/app/components/MainFrame.tsx");
+ReactDOM.render(React.createElement(MainFrame_1.default, null), document.getElementById('root'));
 if (true) {
     module.hot.accept();
 }
@@ -26921,10 +26921,10 @@ if (true) {
 
 /***/ }),
 
-/***/ "./src/app/components/Hello.tsx":
-/*!**************************************!*\
-  !*** ./src/app/components/Hello.tsx ***!
-  \**************************************/
+/***/ "./src/app/components/ClockButton.tsx":
+/*!********************************************!*\
+  !*** ./src/app/components/ClockButton.tsx ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26945,24 +26945,94 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-var Hello = (function (_super) {
-    __extends(Hello, _super);
-    function Hello() {
-        return _super !== null && _super.apply(this, arguments) || this;
+var ClockButton = (function (_super) {
+    __extends(ClockButton, _super);
+    function ClockButton(props) {
+        var _this = _super.call(this, props) || this;
+        _this.handleClick = function () {
+            console.log('running');
+            var timer;
+            if (!_this.state.status) {
+                console.log('running');
+                _this.setState({
+                    status: !_this.state.status,
+                    startTime: Date.now(),
+                });
+                console.log(_this.state);
+                timer = setInterval(_this.tick, 50);
+            }
+            else {
+                _this.setState({ status: !_this.state.status });
+                clearInterval(timer);
+            }
+        };
+        _this.handleReset = function () {
+            _this.setState({ runningTime: 0, status: false });
+        };
+        _this.tick = function () {
+            if (_this.state.status === true) {
+                _this.setState({ runningTime: Date.now() - _this.state.startTime });
+            }
+        };
+        _this.state = {
+            status: false,
+            runningTime: 0,
+            startTime: null,
+        };
+        return _this;
     }
-    Hello.prototype.render = function () {
-        return React.createElement("h1", { className: 'test' },
-            "This is a ",
-            this.props.framework,
-            " application using    ",
-            this.props.compiler,
-            " with ",
-            this.props.bundler,
-            "!!!!");
+    ClockButton.prototype.render = function () {
+        return (React.createElement("div", null,
+            React.createElement("p", null, Math.round(this.state.runningTime / 1000)),
+            React.createElement("button", { onClick: this.handleClick }, this.state.status ? 'STOP' : 'START'),
+            React.createElement("button", { onClick: this.handleReset }, "RESET")));
     };
-    return Hello;
+    return ClockButton;
 }(React.Component));
-exports.Hello = Hello;
+exports.ClockButton = ClockButton;
+exports.default = ClockButton;
+
+
+/***/ }),
+
+/***/ "./src/app/components/MainFrame.tsx":
+/*!******************************************!*\
+  !*** ./src/app/components/MainFrame.tsx ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var NavBar_1 = __webpack_require__(/*! ./NavBar */ "./src/app/components/NavBar.tsx");
+var ClockButton_1 = __webpack_require__(/*! ./ClockButton */ "./src/app/components/ClockButton.tsx");
+var MainFrame = function (props) {
+    return (React.createElement("div", null,
+        React.createElement(NavBar_1.default, null),
+        React.createElement(ClockButton_1.default, null)));
+};
+exports.default = MainFrame;
+
+
+/***/ }),
+
+/***/ "./src/app/components/NavBar.tsx":
+/*!***************************************!*\
+  !*** ./src/app/components/NavBar.tsx ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var NavBar = function (props) {
+    return (React.createElement("div", { style: { backgroundColor: 'grey', width: '100%', height: '4vh', display: 'flex', justifyContent: 'center' } }, "CLOCKJOURNAL"));
+};
+exports.default = NavBar;
 
 
 /***/ }),
