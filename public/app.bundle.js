@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "286a8090692076feda79";
+/******/ 	var hotCurrentHash = "9c7f3345579a39d98928";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -26985,7 +26985,10 @@ var ClockButton = (function (_super) {
         return (React.createElement("div", null,
             React.createElement("p", null, Math.round(this.state.runningTime / 1000)),
             React.createElement("button", { onClick: this.handleClick }, this.state.status ? 'STOP' : 'START'),
-            React.createElement("button", { onClick: this.handleReset }, "RESET")));
+            React.createElement("button", { onClick: this.handleReset }, "RESET"),
+            this.state.runningTime && !this.state.status ?
+                React.createElement("form", null, "FILL ME IN") :
+                React.createElement("div", null)));
     };
     return ClockButton;
 }(React.Component));
@@ -27008,10 +27011,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var NavBar_1 = __webpack_require__(/*! ./NavBar */ "./src/app/components/NavBar.tsx");
 var ClockButton_1 = __webpack_require__(/*! ./ClockButton */ "./src/app/components/ClockButton.tsx");
+var rootReducer_1 = __webpack_require__(/*! ../store/rootReducer */ "./src/app/store/rootReducer.ts");
+var react_1 = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+exports.StoreContext = react_1.createContext(null);
 var MainFrame = function (props) {
-    return (React.createElement("div", null,
-        React.createElement(NavBar_1.default, null),
-        React.createElement(ClockButton_1.default, null)));
+    var store = React.useReducer(rootReducer_1.rootReducer, rootReducer_1.initialState);
+    return (React.createElement(exports.StoreContext.Provider, { value: store },
+        React.createElement("div", null,
+            React.createElement(NavBar_1.default, null),
+            React.createElement(ClockButton_1.default, null))));
 };
 exports.default = MainFrame;
 
@@ -27029,10 +27037,85 @@ exports.default = MainFrame;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var MainFrame_1 = __webpack_require__(/*! ./MainFrame */ "./src/app/components/MainFrame.tsx");
 var NavBar = function (props) {
-    return (React.createElement("div", { style: { backgroundColor: 'grey', width: '100%', height: '4vh', display: 'flex', justifyContent: 'center' } }, "CLOCKJOURNAL"));
+    var _a = React.useContext(MainFrame_1.StoreContext), state = _a[0], dispatch = _a[1];
+    return (console.log(props),
+        React.createElement("div", { style: { backgroundColor: 'grey', width: '100%', height: '4vh', display: 'flex', justifyContent: 'center' } }, "CLOCKJOURNAL"));
 };
 exports.default = NavBar;
+
+
+/***/ }),
+
+/***/ "./src/app/store/combineReducers.ts":
+/*!******************************************!*\
+  !*** ./src/app/store/combineReducers.ts ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var combineReducers = function (reducers) { return function (state, action) {
+    var hasChanged;
+    var nextState = Object.keys(reducers).reduce(function (result, key) {
+        result[key] = reducers[key](state[key], action);
+        hasChanged = hasChanged || result[key] !== state[key];
+        return result;
+    }, {});
+    return hasChanged ? nextState : state;
+}; };
+exports.default = combineReducers;
+
+
+/***/ }),
+
+/***/ "./src/app/store/rootReducer.ts":
+/*!**************************************!*\
+  !*** ./src/app/store/rootReducer.ts ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var combineReducers_1 = __webpack_require__(/*! ./combineReducers */ "./src/app/store/combineReducers.ts");
+var test_1 = __webpack_require__(/*! ./test */ "./src/app/store/test.ts");
+exports.initialState = {
+    testState: 'Alex'
+};
+exports.rootReducer = combineReducers_1.default({
+    testState: test_1.default
+});
+
+
+/***/ }),
+
+/***/ "./src/app/store/test.ts":
+/*!*******************************!*\
+  !*** ./src/app/store/test.ts ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ADD_TEST = 'ADD_TEST';
+exports.addTest = function (name) { return ({
+    type: exports.ADD_TEST,
+    name: name
+}); };
+var testReducer = function (testState, action) {
+    switch (action.type) {
+        case exports.ADD_TEST:
+            return testState;
+    }
+};
+exports.default = testReducer;
 
 
 /***/ }),
