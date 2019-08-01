@@ -2,7 +2,9 @@ App {
   font-family: sans-serif;
   padding: 50px;
 }
-
+body{
+  margin: 0
+}
 h1 {
   margin: 0 0 25px 0;
   text-align: left;

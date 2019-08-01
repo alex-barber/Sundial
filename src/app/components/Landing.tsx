@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { StoreContext } from './MainFrame';
 import firebase from 'firebase';
 
 const Landing = (props: object) => {
