@@ -13,10 +13,15 @@ const ProjectView = (props: object) => {
 
   //TODO: fix this
 React.useEffect(() => {
-  if (firebase.auth().currentUser !==null){
-    console.log('hitting')
-    const unsubscribe = db()
-      .collection('Projects').where("users.creator", '==', firebase.auth().currentUser.uid )
+
+
+    const unsubscribe = firebase.auth().onAuthStateChanged(function(user){
+        console.log('changing: ', user )
+        if (user!=null){
+            console.log(user.uid)
+
+            db()
+      .collection('Projects').where("users.creator", '==', user.uid )
       .onSnapshot(
         (doc: any) => {
           console.log(doc)
@@ -27,16 +32,49 @@ console.log(newArr)
             return setProjects( newArr)
         }
       );
-    return () => unsubscribe();}
+        }
+    })
+
+    console.log('first hit', firebase.auth().currentUser)
+//   if (firebase.auth().currentUser !==null){
+//     console.log('hitting')
+//     const unsubscribe = db()
+//       .collection('Projects').where("users.creator", '==', firebase.auth().currentUser.uid )
+//       .onSnapshot(
+//         (doc: any) => {
+//           console.log(doc)
+//             let newArr: any =[]
+//             doc.docs.forEach((val: any) => newArr.push(val.data()))
+// console.log(newArr)
+//             // doc.docs.forEach( async (val: any) => (console.log(val.data()), await setStuff([...stuff, val.data()])))
+//             return setProjects( newArr)
+//         }
+//       );
+//     return () => unsubscribe();
+// }
   }, []);
 
 
   return (
 <div>
-  {myProjects.length>1 && myProjects.map( project => {
-    <span>{project.name}</span>
-  })}
-    <ProjectAdd/>
+      <ProjectAdd/>
+      <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
+  {myProjects.length>1 &&
+  (console.log('hitting', myProjects[1].name), myProjects.map( project => {
+      return(
+
+    <div         style={{
+        margin: '.5rem',
+          width: '10vw',
+          height: '10vw',
+          border: 'blue',
+          borderStyle: 'solid',
+          backgroundColor: 'lightgrey',
+        }}>{project.name}</div>
+          )})
+
+  )}
+      </div>
 </div>
 
   );

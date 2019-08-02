@@ -6,9 +6,10 @@ import { firebaseConfig } from '../../server/firebase/index';
 import * as firebase from 'firebase';
 import { routes } from './constants/routes';
 import Header from './components/Header';
-import Join from "./components/Join";
+import Join from './components/Join';
 import { rootReducer, initialState } from './store/rootReducer';
-import NavBar from "./components/NavBar";
+import NavBar from './components/NavBar';
+import LeftBar from './components/LeftBar';
 
 firebase.initializeApp(firebaseConfig);
 export const db: any = firebase.firestore;
@@ -25,11 +26,18 @@ const App = () => {
   return (
     <StoreContext.Provider value={store}>
       <AuthContext.Provider value={{ isLoggedIn, setLoggedIn }}>
-
         <div className="App">
           <Router>
             {/*<Header />*/}
-            <NavBar/>
+            <NavBar />
+            <div style={{display: 'flex', flexDirection: 'row'}}>
+              <div style={{width: '7vw', marginRight:'.5rem'}}>
+            <LeftBar />
+              </div>
+              <div style={{width: '93vw'}}>
+            <MainFrame />
+              </div>
+            </div>
             <Switch>
               {routes.map(route => (
                 <Route
@@ -41,7 +49,6 @@ const App = () => {
               ))}
             </Switch>
           </Router>
-            <MainFrame/>
         </div>
       </AuthContext.Provider>
     </StoreContext.Provider>

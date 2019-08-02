@@ -39,6 +39,7 @@ const ProjectAdd = (props: object) => {
           setAddFlag(true), console.log(firebase.auth().currentUser.uid)
         )}
         style={{
+           margin: '.5rem',
           width: '10vw',
           height: '10vw',
           border: 'blue',
