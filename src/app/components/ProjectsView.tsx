@@ -20,7 +20,7 @@ React.useEffect(() => {
         if (user!=null){
             console.log(user.uid)
 
-            db()
+            db
       .collection('Projects').where("users.creator", '==', user.uid )
       .onSnapshot(
         (doc: any) => {
@@ -38,7 +38,7 @@ console.log(newArr)
     console.log('first hit', firebase.auth().currentUser)
 //   if (firebase.auth().currentUser !==null){
 //     console.log('hitting')
-//     const unsubscribe = db()
+//     const unsubscribe =db
 //       .collection('Projects').where("users.creator", '==', firebase.auth().currentUser.uid )
 //       .onSnapshot(
 //         (doc: any) => {

@@ -11,7 +11,7 @@ export const firebaseConfig ={
 }
 
 firebase.initializeApp(firebaseConfig);
-export const db: any = firebase.firestore;
+export const db: any = firebase.firestore();
 
 // const firebaseApp = firebase.initializeApp({
 //       apiKey: "AIzaSyDvZg4JN9x7gTmbq82GZWEki04zd2OVgs0",

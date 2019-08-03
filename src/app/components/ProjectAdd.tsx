@@ -2,6 +2,7 @@ import * as React from 'react';
 import {db} from '../../../server/firebase'
 import { StoreContext } from '../App';
 import * as firebase from 'firebase';
+import {addProject} from '../../../utils/projects/addProject'
 
 const ProjectAdd = (props: object) => {
   // const [state, dispatch] = React.useContext(StoreContext);
@@ -16,29 +17,22 @@ const ProjectAdd = (props: object) => {
   const addPost = () => {
     if (firebase.auth().currentUser.uid !== null && name != '') {
 
-
-      db()
-        .collection('Projects')
-        .add({
-          name: name,
-          dateCreated: new Date().toLocaleString(),
-          timestamp: Date.now()
-        })
-        .collection('info')
-        .document('private')
-        .add({
-            members: {
-                admin: firebase.auth().currentUser.uid
-            }
-
-        })
-
-        .then(function(docRef: any) {
-          console.log('Document written with ID: ', docRef.id);
-        })
-        .catch(function(error: any) {
-          console.error('Error adding document: ', error);
-        });
+addProject(name)
+//         console.log(firebase.firestore().batch())
+//         console.log(db())
+      //db
+      //   .collection('Projects')
+      //   .add({
+      //     name: name,
+      //     dateCreated: new Date().toLocaleString(),
+      //     timestamp: Date.now()
+      //   })
+      //   .then(function(docRef: any) {
+      //     console.log('Document written with ID: ', docRef.id);
+      //   })
+      //   .catch(function(error: any) {
+      //     console.error('Error adding document: ', error);
+      //   });
       setName('');
     } else console.log('Sign in first!');
   };

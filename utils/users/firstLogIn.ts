@@ -1,8 +1,7 @@
-import * as firebase from "firebase";
 import {db}  from '../../server/firebase'
 
 
-export const firstLogin  =(user: any) => db()
+export const firstLogin  =(user: any) =>db
         .collection('Users')
         .add({
         uid: user.user.uid,
