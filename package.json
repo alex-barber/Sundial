@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "./node_modules/.bin/webpack",
-    "start": "npm run build && node server/server.js",
-    "start-dev": "webpack && node server/server.js"
+    "start": "npm run build && node server/server.js && node server/firebase",
+    "start-dev": "webpack && node server/server.js && node server/firebase"
   },
   "keywords": [],
   "author": "",

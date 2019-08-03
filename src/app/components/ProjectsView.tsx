@@ -1,5 +1,5 @@
 import * as React from "react";
-import {db} from '../App'
+import {db} from '../../../server/firebase'
 import ProjectAdd from "./ProjectAdd";
 import * as firebase from 'firebase';
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { db } from '../App';
+import {db} from '../../../server/firebase'
 import { StoreContext } from '../App';
 import * as firebase from 'firebase';
 
@@ -11,16 +11,28 @@ const ProjectAdd = (props: object) => {
   const [addFlag, setAddFlag] = React.useState(false);
   const [name, setName] = React.useState('');
 
-  const addPost = () => {
 
-    if (firebase.auth().currentUser.uid !== null && name!='') {
-      db().collection('Projects')
+
+  const addPost = () => {
+    if (firebase.auth().currentUser.uid !== null && name != '') {
+
+
+      db()
+        .collection('Projects')
         .add({
           name: name,
-          users: {
-            creator: firebase.auth().currentUser.uid,
-          },
+          dateCreated: new Date().toLocaleString(),
+          timestamp: Date.now()
         })
+        .collection('info')
+        .document('private')
+        .add({
+            members: {
+                admin: firebase.auth().currentUser.uid
+            }
+
+        })
+
         .then(function(docRef: any) {
           console.log('Document written with ID: ', docRef.id);
         })
@@ -28,8 +40,7 @@ const ProjectAdd = (props: object) => {
           console.error('Error adding document: ', error);
         });
       setName('');
-    }
-    else console.log('Sign in first!')
+    } else console.log('Sign in first!');
   };
 
   return (
@@ -39,7 +50,7 @@ const ProjectAdd = (props: object) => {
           setAddFlag(true), console.log(firebase.auth().currentUser.uid)
         )}
         style={{
-           margin: '.5rem',
+          margin: '.5rem',
           width: '10vw',
           height: '10vw',
           border: 'blue',

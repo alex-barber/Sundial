@@ -10,6 +10,9 @@ export const firebaseConfig ={
     appId: "1:783630146081:web:b7d58ccc81d28841"
 }
 
+firebase.initializeApp(firebaseConfig);
+export const db: any = firebase.firestore;
+
 // const firebaseApp = firebase.initializeApp({
 //       apiKey: "AIzaSyDvZg4JN9x7gTmbq82GZWEki04zd2OVgs0",
 //     authDomain: "sundial-82cc2.firebaseapp.com",

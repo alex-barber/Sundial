@@ -2,6 +2,8 @@ import * as React from 'react';
 import { AuthContext } from '../App';
 import * as firebase from 'firebase';
 import { withRouter } from 'react-router-dom';
+import {firstLogin} from "../../../utils/users/firstLogIn";
+
 
 const Join = ({ history }: any) => {
   const [error, setErrors] = React.useState('');
@@ -16,6 +18,8 @@ const Join = ({ history }: any) => {
         console.log(authData);
         if (authData.user) {firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
           Auth.setLoggedIn(true);
+          console.log(authData)
+          authData.additionalUserInfo.isNewUser && firstLogin(authData)
         }
       })
       .catch(function(error) {
@@ -25,7 +29,6 @@ const Join = ({ history }: any) => {
   }, []);
 
   const handleGoogleLogin = () => {
-    console.log('running');
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase
       .auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
@@ -39,8 +42,9 @@ const Join = ({ history }: any) => {
   }
 
   return (
+      console.log(firebase.auth()),
     <div>
-      {Auth.isLoggedin===true ? <div><button onClick={()=>(firebase.auth().signOut())}>LOGOUT</button></div> :
+      {Auth.isLoggedIn===true ? <div><button onClick={()=>(firebase.auth().signOut())}>LOGOUT</button></div> :
           <div>
           <button
         onClick={() => handleGoogleLogin()}
