@@ -19,15 +19,14 @@ React.useEffect(() => {
         console.log('changing: ', user )
         if (user!=null){
             console.log(user.uid)
+const projectRef=  db
+      .collection('Projects').where("members.list", 'array-contains', user.uid )
 
-            db
-      .collection('Projects').where("users.creator", '==', user.uid )
-      .onSnapshot(
+      projectRef.orderBy('timestamp').onSnapshot(
         (doc: any) => {
-          console.log(doc)
+          console.log(doc.docs[0].data())
             let newArr: any =[]
             doc.docs.forEach((val: any) => newArr.push(val.data()))
-console.log(newArr)
             // doc.docs.forEach( async (val: any) => (console.log(val.data()), await setStuff([...stuff, val.data()])))
             return setProjects( newArr)
         }
@@ -56,11 +55,12 @@ console.log(newArr)
 
 
   return (
+      console.log(myProjects),
 <div>
       <ProjectAdd/>
       <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-  {myProjects.length>1 &&
-  (console.log('hitting', myProjects[1].name), myProjects.map( project => {
+  {myProjects.length > 0 &&
+  (console.log('hitting'), myProjects.map( project => {
       return(
 
     <div         style={{

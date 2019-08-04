@@ -14,8 +14,10 @@ const ProjectAdd = (props: object) => {
 
 
 
-  const addPost = () => {
-    if (firebase.auth().currentUser.uid !== null && name != '') {
+  const addPost =  () => {
+       // addProject(name)
+      firebase.auth().currentUser
+    if (firebase.auth().currentUser !== null && name != '') {
 
 addProject(name)
 //         console.log(firebase.firestore().batch())
@@ -41,7 +43,8 @@ addProject(name)
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <div
         onClick={() => (
-          setAddFlag(true), console.log(firebase.auth().currentUser.uid)
+          setAddFlag(!addFlag),
+            addPost()
         )}
         style={{
           margin: '.5rem',
