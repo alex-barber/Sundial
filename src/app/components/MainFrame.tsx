@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { withRouter } from 'react-router-dom';
+
 // import NavBar from "./NavBar";
 import ClockButton from './ClockButton';
 import Landing from './Landing';
@@ -13,11 +15,19 @@ import * as ROUTES from '../constants/routes';
 import ProjectView from './ProjectsView';
 import NavBar from './NavBar';
 import LeftBar from './LeftBar';
+import * as firebase from "firebase";
+import {firstLogin} from "../../../utils/users/firstLogIn";
+import {AuthContext} from "../App";
 
 const MainFrame = (props: object) => {
+      const Auth = React.useContext(AuthContext);
+
+
+
   return (
     <div>
-      <NavBar />
+                    <NavBar/>
+
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <div style={{ width: '7vw', marginRight: '.5rem' }}>
           <LeftBar />
@@ -33,4 +43,4 @@ const MainFrame = (props: object) => {
   );
 };
 
-export default MainFrame;
+export default withRouter(MainFrame);

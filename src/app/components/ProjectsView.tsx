@@ -2,6 +2,7 @@ import * as React from "react";
 import {db} from '../../../server/firebase'
 import ProjectAdd from "./ProjectAdd";
 import * as firebase from 'firebase';
+import {BrowserRouter, Route, Link} from "react-router-dom";
 
 const ProjectView = (props: object) => {
   // const [state, dispatch] = React.useContext(StoreContext);
@@ -62,7 +63,7 @@ const projectRef=  db
   {myProjects.length > 0 &&
   (console.log('hitting'), myProjects.map( project => {
       return(
-
+    <Link to='/projects/3' >
     <div         style={{
         margin: '.5rem',
           width: '10vw',
@@ -71,10 +72,12 @@ const projectRef=  db
           borderStyle: 'solid',
           backgroundColor: 'lightgrey',
         }}>{project.name}</div>
+    </Link>
           )})
 
   )}
       </div>
+
 </div>
 
   );

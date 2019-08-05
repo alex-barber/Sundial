@@ -9,24 +9,7 @@ const Join = ({ history }: any) => {
   const [error, setErrors] = React.useState('');
   const Auth = React.useContext(AuthContext);
 
-  React.useEffect(() => {
-    // recieve redirect
-    const unsubscribe: any = firebase
-      .auth()
-      .getRedirectResult()
-      .then(function(authData) {
-        console.log(authData);
-        if (authData.user) {firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-          Auth.setLoggedIn(true);
-          console.log(authData)
-          authData.additionalUserInfo.isNewUser && firstLogin(authData)
-        }
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    return () => unsubscribe();
-  }, []);
+
 
   const handleGoogleLogin = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -42,9 +25,9 @@ const Join = ({ history }: any) => {
   }
 
   return (
-      console.log(firebase.auth()),
+      console.log(AuthContext),
     <div>
-      {Auth.isLoggedIn===true ? <div><button onClick={()=>(firebase.auth().signOut())}>LOGOUT</button></div> :
+
           <div>
           <button
         onClick={() => handleGoogleLogin()}
@@ -59,10 +42,10 @@ const Join = ({ history }: any) => {
       </button>
       <span>{error}</span>
           </div>
-          }
+
     </div>
 
   );
 };
 
-export default Join;
+export default withRouter(Join);
