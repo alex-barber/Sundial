@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import MainFrame from './MainFrame';
 import { AuthContext } from '../App';
 import {firstLogin} from "../../../utils/users/firstLogIn";
+import PostTimer from "./PostTimer";
 
 const Landing = (props: any) => {
   const provider = new firebase.auth.GoogleAuthProvider();
@@ -37,7 +38,12 @@ React.useEffect(() => {
 
   return (
     console.log(props.location),
+        <div>
     <div>{firebase.auth().currentUser == null ? <Join /> : <Redirect to='/home'/>}</div>
+        <hr/>
+        <hr/>
+        <PostTimer/>
+        </div>
   );
 };
 
