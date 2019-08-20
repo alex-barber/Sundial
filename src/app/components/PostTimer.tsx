@@ -1,56 +1,43 @@
 import * as React from 'react';
+import {StoreContext} from "../App";
+import {toggleTimer} from "../store/timerStatusReducer";
+import {useEffect} from "react";
 
 const PostTimer = (props: object) => {
-  const [timerStatus, setTimerStatus] = React.useState(false);
   const [runningTime, setRunningTime] = React.useState(0);
   const [startTime, setStartTime] = React.useState(null);
+  const [{timerStatus}, dispatch] = React.useContext(StoreContext)
 
   const handleClick = () => {
-    let timer;
-console.log('click running')
-    if (timerStatus === false) {
-        console.log('timer running')
-
-            startTimer()
-console.log( 'in click', startTime, timerStatus)
-      timer = setInterval(tick, 50);
-    } else {
-        console.log('stop timer', timerStatus)
-      setTimerStatus(false);
-      clearInterval(timer);
-    }
-  };
-
-  const startTimer = async () =>{
-       await setStartTime(Date.now());
-      await setTimerStatus(true);
-      console.log(startTime, timerStatus )
-
-  }
-
-  const handleReset = (): void => {
-      console.log('reset clicked')
-
-    setRunningTime(0);
-    setTimerStatus(false);
-  };
-
-  const tick = () => {
+      dispatch(toggleTimer())
       console.log(timerStatus)
-        console.log(Date.now()-startTime)
-        setRunningTime(Date.now()-startTime)
+    setStartTime(Date.now())
   };
 
+
+React.useEffect(()=>{
+    let interval: any = null
+    if (timerStatus===true){
+        console.log(true)
+        interval = setInterval(()=>{
+            setRunningTime(runningTime => runningTime +1);
+        }, 1000)
+    }
+    else if (timerStatus===false && runningTime!==0) {
+        clearInterval(interval)
+    }
+    return () =>  clearInterval(interval)
+},[timerStatus,runningTime])
 
   return(
       <div>
-          <p>{Math.round(runningTime/1000)}</p>
+          <p>{runningTime}</p>
           <button onClick={handleClick}>
           {timerStatus ? 'STOP' : 'START'}
           </button>
 
-          <button onClick={handleReset}>RESET</button>
-          {(runningTime && !timerStatus) && <form>FILL ME IN</form> }
+          {/*<button onClick={handleReset}>RESET</button>*/}
+          {/*{(runningTime && !timerStatus) && <form>FILL ME IN</form> }*/}
 
       </div>
   )
