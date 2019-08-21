@@ -20,21 +20,6 @@ const ProjectAdd = (props: object) => {
     if (firebase.auth().currentUser !== null && name != '') {
 
 addProject(name)
-//         console.log(firebase.firestore().batch())
-//         console.log(db())
-      //db
-      //   .collection('Projects')
-      //   .add({
-      //     name: name,
-      //     dateCreated: new Date().toLocaleString(),
-      //     timestamp: Date.now()
-      //   })
-      //   .then(function(docRef: any) {
-      //     console.log('Document written with ID: ', docRef.id);
-      //   })
-      //   .catch(function(error: any) {
-      //     console.error('Error adding document: ', error);
-      //   });
       setName('');
     } else console.log('Sign in first!');
   };

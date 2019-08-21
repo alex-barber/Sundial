@@ -7,7 +7,7 @@ const PostTimer = (props: object) => {
   const [runningTime, setRunningTime] = React.useState(0);
   const [startTime, setStartTime] = React.useState(null);
   const [{timerStatus}, dispatch] = React.useContext(StoreContext)
-
+  const [postBody, setPostBody] = React.useState('')
   const handleClick = () => {
       dispatch(toggleTimer())
       console.log(timerStatus)
@@ -37,7 +37,23 @@ React.useEffect(()=>{
           </button>
 
           {/*<button onClick={handleReset}>RESET</button>*/}
-          {/*{(runningTime && !timerStatus) && <form>FILL ME IN</form> }*/}
+          {(runningTime && !timerStatus) ?
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <form
+            onSubmit={(event: any) => {
+              event.preventDefault();
+
+            }}
+          >
+            <input
+              type="text"
+              value={postBody}
+              onChange={e => setPostBody(e.target.value)}
+            />
+            <input type="submit" value="Submit" />
+          </form>
+        </div> : <></>
+          }
 
       </div>
   )
