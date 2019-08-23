@@ -10,6 +10,7 @@ import Join from './components/Join';
 import { rootReducer, initialState } from './store/rootReducer';
 import NavBar from './components/NavBar';
 import LeftBar from './components/LeftBar';
+import Landing from "./components/Landing";
 
 // firebase.initializeApp(firebaseConfig);
 // export const db: any = firebase.firestore;
@@ -23,14 +24,15 @@ const App = () => {
   const [isLoggedIn, setLoggedIn] = React.useState(false);
   const store: any = React.useReducer(rootReducer, initialState);
 
+
+
   return (
     <StoreContext.Provider value={store}>
       <AuthContext.Provider value={{ isLoggedIn, setLoggedIn }}>
         <div className="App">
           <Router>
             {/*<Header />*/}
-
-            <MainFrame />
+<Landing/>
             <Switch>
               {routes.map(route => (
                 <Route
@@ -39,6 +41,7 @@ const App = () => {
                   exact={route.exact}
                   component={route.main}
                 />
+
               ))}
             </Switch>
           </Router>
