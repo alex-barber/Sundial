@@ -1,39 +1,41 @@
 const path = require('path'),
-    webpack = require('webpack'),
-    HtmlWebpackPlugin = require('html-webpack-plugin');
+  webpack = require('webpack'),
+  HtmlWebpackPlugin = require('html-webpack-plugin'),
+  MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-    mode: 'development',
-    entry: {
-        app: ['./src/app/App.tsx', 'webpack-hot-middleware/client'],
-        vendor: ['react', 'react-dom']
-    },
-    output: {
-        path: path.resolve(__dirname,'public'),
-        filename: '[name].bundle.js'
-    },
-    devtool: 'source-map',
-    resolve: {
-        extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
-    },
-    module: {
-        rules: [
-            {
-                test: /\.(ts|tsx)$/,
-                loader: 'ts-loader'
-            },
-            {enforce: "pre", test: /\.js$/, loader: "source-map-loader"},
-              {
-        test:  /\.css$/,
-        use: [
-            'style-loader',
-            'css-loader'
-        ]
-      }
-        ]
-    },
-    plugins: [
-        // new HtmlWebpackPlugin({template: path.resolve(__dirname, 'src', 'app', 'index.html')}),
-        new webpack.HotModuleReplacementPlugin()
-    ]
-}
+  mode: 'development',
+  entry: {
+    app: ['./src/app/App.tsx', 'webpack-hot-middleware/client'],
+    vendor: ['react', 'react-dom'],
+  },
+  output: {
+    path: path.resolve(__dirname, 'public'),
+    filename: '[name].bundle.js',
+  },
+  devtool: 'source-map',
+  resolve: {
+    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        loader: 'ts-loader',
+      },
+      { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
+    ],
+  },
+  plugins: [
+    // new HtmlWebpackPlugin({template: path.resolve(__dirname, 'src', 'app', 'index.html')}),
+    new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'styles.css',
+      chunkFilename: 'styles.css',
+    }),
+  ],
+};

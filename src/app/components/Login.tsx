@@ -1,23 +1,26 @@
-import * as React from "react";
-import { AuthContext } from "../App";
-import * as firebase from 'firebase'
-
+import * as React from 'react';
+import { AuthContext } from '../App';
+import * as firebase from 'firebase';
 
 const Login = () => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [error, setErrors] = React.useState("");
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [error, setErrors] = React.useState('');
 
   const Auth = React.useContext(AuthContext);
   const handleForm = (e: any) => {
     e.preventDefault();
 
-    firebase.auth().signInWithEmailAndPassword(email, password).then(res => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(res => {
         if (res.user) {
-            console.log(res)
-            Auth.setLoggedIn(true)}
-    }).catch(e => setErrors(e.message))
-
+          console.log(res);
+          Auth.setLoggedIn(true);
+        }
+      })
+      .catch(e => setErrors(e.message));
   };
 
   return (

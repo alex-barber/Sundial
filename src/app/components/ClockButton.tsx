@@ -4,7 +4,7 @@ interface ClockButtonState {
   status: boolean | null;
   runningTime: number;
   startTime: any;
-  postBody: null | string
+  postBody: null | string;
 }
 
 interface ClockButtonProps {}
@@ -45,7 +45,9 @@ export class ClockButton extends React.Component<
 
   tick = () => {
     if (this.state.status === true) {
-      this.setState({ runningTime: Date.now() - Date.parse(this.state.startTime) });
+      this.setState({
+        runningTime: Date.now() - Date.parse(this.state.startTime),
+      });
     }
   };
 
@@ -57,24 +59,23 @@ export class ClockButton extends React.Component<
           {this.state.status ? 'STOP' : 'START'}
         </button>
         <button onClick={this.handleReset}>RESET</button>
-        {this.state.runningTime && !this.state.status ?
-                 <form
+        {this.state.runningTime && !this.state.status ? (
+          <form
             onSubmit={(event: any) => {
               event.preventDefault();
-              console.log(this.state.postBody)
+              console.log(this.state.postBody);
             }}
           >
             <input
               type="text"
               value={this.state.postBody}
-              onChange={e => this.setState({postBody: e.target.value})}
+              onChange={e => this.setState({ postBody: e.target.value })}
             />
             <input type="submit" value="Submit" />
-          </form> :
-            <div></div>
-
-
-        }
+          </form>
+        ) : (
+          <div />
+        )}
       </div>
     );
   }

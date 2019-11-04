@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {db} from '../../../server/firebase'
+import { db } from '../../../server/firebase';
 import { StoreContext } from '../App';
 import * as firebase from 'firebase';
-import {addProject} from '../../../utils/projects/addProject'
+import { addProject } from '../../../utils/projects/addProject';
 
 const ProjectAdd = (props: object) => {
   // const [state, dispatch] = React.useContext(StoreContext);
@@ -12,14 +12,11 @@ const ProjectAdd = (props: object) => {
   const [addFlag, setAddFlag] = React.useState(false);
   const [name, setName] = React.useState('');
 
-
-
-  const addPost =  () => {
-       // addProject(name)
-      firebase.auth().currentUser
+  const addPost = () => {
+    // addProject(name)
+    firebase.auth().currentUser;
     if (firebase.auth().currentUser !== null && name != '') {
-
-addProject(name)
+      addProject(name);
       setName('');
     } else console.log('Sign in first!');
   };
@@ -27,10 +24,7 @@ addProject(name)
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <div
-        onClick={() => (
-          setAddFlag(!addFlag),
-            addPost()
-        )}
+        onClick={() => (setAddFlag(!addFlag), addPost())}
         style={{
           margin: '.5rem',
           width: '10vw',
