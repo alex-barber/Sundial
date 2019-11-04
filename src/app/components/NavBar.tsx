@@ -2,7 +2,6 @@ import * as React from 'react';
 import * as firebase from 'firebase';
 import { addTest } from '../store/test';
 import { AuthContext } from '../App';
-import Join from './Login';
 const NavBar = (props: object) => {
   // //
   const Auth = React.useContext(AuthContext);
@@ -26,7 +25,6 @@ const NavBar = (props: object) => {
     >
       <span>Logged in? {JSON.stringify(Auth.isLoggedIn)}</span>
       <h2>Sundial</h2>
-      <Join />
     </div>
   );
 };

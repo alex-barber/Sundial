@@ -1,25 +1,20 @@
-import * as React from 'react';
-import { db } from '../../../server/firebase';
-import { StoreContext } from '../App';
-import * as firebase from 'firebase';
-import { addProject } from '../../../utils/projects/addProject';
+import * as React from 'react'
+import { db } from '../../../server/firebase'
+import { StoreContext } from '../App'
+import * as firebase from 'firebase'
+import { addProject } from '../../../utils/projects/addProject'
 
 const ProjectAdd = (props: object) => {
-  // const [state, dispatch] = React.useContext(StoreContext);
-  // const [stuff, setStuff] = React.useState([]);
-  // const [name, setName] = React.useState('')
-  // //
-  const [addFlag, setAddFlag] = React.useState(false);
-  const [name, setName] = React.useState('');
+  const [addFlag, setAddFlag] = React.useState(false)
+  const [name, setName] = React.useState('')
 
   const addPost = () => {
-    // addProject(name)
-    firebase.auth().currentUser;
+    firebase.auth().currentUser
     if (firebase.auth().currentUser !== null && name != '') {
-      addProject(name);
-      setName('');
-    } else console.log('Sign in first!');
-  };
+      addProject(name)
+      setName('')
+    } else console.log('Sign in first!')
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -38,24 +33,31 @@ const ProjectAdd = (props: object) => {
       </div>
 
       {addFlag && (
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div>
           <form
+            className="mt-1"
             onSubmit={(event: any) => {
-              event.preventDefault();
-              addPost();
+              event.preventDefault()
+              addPost()
             }}
           >
             <input
+              className="bg-white focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-2 px-4 block w-full appearance-none leading-normal"
               type="text"
               value={name}
               onChange={e => setName(e.target.value)}
             />
-            <input type="submit" value="Submit" />
+            <button
+              className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+              type="submit"
+            >
+              Submit
+            </button>
           </form>
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ProjectAdd;
+export default ProjectAdd

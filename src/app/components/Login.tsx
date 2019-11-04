@@ -1,47 +1,43 @@
-import * as React from 'react';
-import { AuthContext } from '../App';
-import * as firebase from 'firebase';
-import { withRouter } from 'react-router-dom';
-import { firstLogin } from '../../../utils/users/firstLogIn';
+import * as React from 'react'
+import { AuthContext } from '../App'
+import * as firebase from 'firebase'
+import { withRouter } from 'react-router-dom'
+import { firstLogin } from '../../../utils/users/firstLogIn'
 
 const Login = ({ history }: any) => {
-  const [error, setErrors] = React.useState('');
-  const Auth = React.useContext(AuthContext);
+  const [error, setErrors] = React.useState('')
+  const Auth = React.useContext(AuthContext)
 
   const handleGoogleLogin = () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
+    const provider = new firebase.auth.GoogleAuthProvider()
     firebase
       .auth()
       .setPersistence(firebase.auth.Auth.Persistence.SESSION)
       .then(() => {
-        firebase.auth().signInWithRedirect(provider);
-      });
-  };
+        firebase.auth().signInWithRedirect(provider)
+      })
+  }
 
   const handleSignOut = (): void => {
-    firebase.auth().signOut();
-    Auth.setLoggedIn(false);
-  };
+    firebase.auth().signOut()
+    Auth.setLoggedIn(false)
+  }
 
   return (
-    console.log(AuthContext),
-    (
-<div>
-        <button
-          onClick={() => handleGoogleLogin()}
-          className="border border-gray-400 rounded p-1"
-          type="button"
-        >
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-            alt="logo"
-          />
-          Login With Google
-        </button>
-</div>
+    <div>
+      <button
+        onClick={() => handleGoogleLogin()}
+        className="border border-gray-400 rounded p-1"
+        type="button"
+      >
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+          alt="logo"
+        />
+        Login With Google
+      </button>
+    </div>
+  )
+}
 
-    )
-  );
-};
-
-export default withRouter(Login);
+export default withRouter(Login)

@@ -41,7 +41,7 @@ const Landing = (props: any) => {
   return (
 
           firebase.auth().currentUser == null ? (
-        <div className="flex justify-center items-center" id="landing">
+        <div className="flex justify-center" id="landing">
             <Login />
         </div>
           ) : (
