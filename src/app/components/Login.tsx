@@ -26,10 +26,10 @@ const Login = ({ history }: any) => {
   return (
     console.log(AuthContext),
     (
-<div className="h-56">
+<div>
         <button
           onClick={() => handleGoogleLogin()}
-          className="border border-gray-400"
+          className="border border-gray-400 rounded p-1"
           type="button"
         >
           <img
