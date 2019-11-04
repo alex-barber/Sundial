@@ -4,7 +4,6 @@ import { toggleTimer } from '../store/timerStatusReducer';
 import { useEffect } from 'react';
 import { db } from '../../../server/firebase';
 
-
 const PostTimer = (props: object) => {
   const [runningTime, setRunningTime] = React.useState(0);
   const [startTime, setStartTime] = React.useState(null);
@@ -36,15 +35,15 @@ const PostTimer = (props: object) => {
       .collection('posts')
       .doc(`${date.getFullYear()}-${date.getMonth() + 1}`)
       .update({
-          1: {
-              day: date.getDate(),
-              user: 'placeholder',
-              postBody: postBody,
-              tags: ['placeholder'],
-              startTime: startTime,
-              runningTime: runningTime
-          }
-      })
+        1: {
+          day: date.getDate(),
+          user: 'placeholder',
+          postBody: postBody,
+          tags: ['placeholder'],
+          startTime: startTime,
+          runningTime: runningTime,
+        },
+      });
     //TODO: on success: let user know & clear form;
   };
 
@@ -59,7 +58,7 @@ const PostTimer = (props: object) => {
           <form
             onSubmit={(event: any) => {
               event.preventDefault();
-              addPost()
+              addPost();
             }}
           >
             <input

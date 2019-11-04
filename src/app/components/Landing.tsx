@@ -1,12 +1,12 @@
 import * as React from 'react';
 import firebase from 'firebase';
 import Join from './Join';
-import {Redirect} from 'react-router'
+import { Redirect } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import MainFrame from './MainFrame';
 import { AuthContext } from '../App';
-import {firstLogin} from "../../../utils/users/firstLogIn";
-import PostTimer from "./PostTimer";
+import { firstLogin } from '../../../utils/users/firstLogIn';
+import PostTimer from './PostTimer';
 
 const Landing = (props: any) => {
   const provider = new firebase.auth.GoogleAuthProvider();
@@ -16,18 +16,20 @@ const Landing = (props: any) => {
     firebase.auth().signInWithRedirect(provider);
   };
 
-React.useEffect(() => {
+  React.useEffect(() => {
     // recieve redirect
     const unsubscribe: any = firebase
       .auth()
       .getRedirectResult()
       .then(function(authData) {
         console.log(authData);
-        if (authData.user) {firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-          console.log(authData)
-          authData.additionalUserInfo.isNewUser && firstLogin(authData)
-                    Auth.setLoggedIn(true);
-
+        if (authData.user) {
+          firebase
+            .auth()
+            .setPersistence(firebase.auth.Auth.Persistence.SESSION);
+          console.log(authData);
+          authData.additionalUserInfo.isNewUser && firstLogin(authData);
+          Auth.setLoggedIn(true);
         }
       })
       .catch(function(error) {
@@ -38,12 +40,20 @@ React.useEffect(() => {
 
   return (
     console.log(props.location),
+    (
+      <div>
         <div>
-    <div>{firebase.auth().currentUser == null ? <Join /> : <Redirect to='/home'/>}</div>
-        <hr/>
-        <hr/>
-        <PostTimer/>
+          {firebase.auth().currentUser == null ? (
+            <Join />
+          ) : (
+            <Redirect to="/home" />
+          )}
         </div>
+        <hr />
+        <hr />
+        {/*<PostTimer />*/}
+      </div>
+    )
   );
 };
 
