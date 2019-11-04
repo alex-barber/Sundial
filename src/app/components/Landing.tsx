@@ -1,6 +1,6 @@
 import * as React from 'react';
 import firebase from 'firebase';
-import Join from './Join';
+import Login from './Login';
 import { Redirect } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import MainFrame from './MainFrame';
@@ -39,21 +39,15 @@ const Landing = (props: any) => {
   }, []);
 
   return (
-    console.log(props.location),
-    (
-      <div>
-        <div>
-          {firebase.auth().currentUser == null ? (
-            <Join />
+
+          firebase.auth().currentUser == null ? (
+        <div className="flex justify-center" id="landing">
+            <Login />
+        </div>
           ) : (
             <Redirect to="/home" />
-          )}
-        </div>
-        <hr />
-        <hr />
-        {/*<PostTimer />*/}
-      </div>
-    )
+          )
+
   );
 };
 

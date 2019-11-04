@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as firebase from 'firebase';
 import { addTest } from '../store/test';
 import { AuthContext } from '../App';
-import Join from './Join';
+import Join from './Login';
 const NavBar = (props: object) => {
   // //
   const Auth = React.useContext(AuthContext);
