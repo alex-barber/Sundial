@@ -6,7 +6,7 @@ import { firebaseConfig } from '../../server/firebase/index';
 import * as firebase from 'firebase';
 import { routes } from './constants/routes';
 import Header from './components/Header';
-import Join from './components/Join';
+import Join from './components/Login';
 import { rootReducer, initialState } from './store/rootReducer';
 import NavBar from './components/NavBar';
 import LeftBar from './components/LeftBar';
@@ -28,7 +28,6 @@ const App = () => {
   return (
     <StoreContext.Provider value={store}>
       <AuthContext.Provider value={{ isLoggedIn, setLoggedIn }}>
-        <div className="App">
           <Router>
             {/*<Header />*/}
             <Landing />
@@ -43,13 +42,12 @@ const App = () => {
               ))}
             </Switch>
           </Router>
-        </div>
       </AuthContext.Provider>
     </StoreContext.Provider>
   );
 };
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById('app');
 ReactDOM.render(<App />, rootElement);
 
 if (module.hot) {

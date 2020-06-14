@@ -1,59 +1,43 @@
-import * as React from 'react';
-import { AuthContext } from '../App';
-import * as firebase from 'firebase';
+import * as React from 'react'
+import { AuthContext } from '../App'
+import * as firebase from 'firebase'
+import { withRouter } from 'react-router-dom'
+import { firstLogin } from '../../../utils/users/firstLogIn'
 
-const Login = () => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [error, setErrors] = React.useState('');
+const Login = ({ history }: any) => {
+  const [error, setErrors] = React.useState('')
+  const Auth = React.useContext(AuthContext)
 
-  const Auth = React.useContext(AuthContext);
-  const handleForm = (e: any) => {
-    e.preventDefault();
-
+  const handleGoogleLogin = () => {
+    const provider = new firebase.auth.GoogleAuthProvider()
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(res => {
-        if (res.user) {
-          console.log(res);
-          Auth.setLoggedIn(true);
-        }
+      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .then(() => {
+        firebase.auth().signInWithRedirect(provider)
       })
-      .catch(e => setErrors(e.message));
-  };
+  }
+
+  const handleSignOut = (): void => {
+    firebase.auth().signOut()
+    Auth.setLoggedIn(false)
+  }
 
   return (
     <div>
-      <h1>Login</h1>
-      <form onSubmit={e => handleForm(e)}>
-        <input
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          name="email"
-          type="email"
-          placeholder="email"
+      <button
+        onClick={() => handleGoogleLogin()}
+        className="border border-gray-400 rounded p-1"
+        type="button"
+      >
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+          alt="logo"
         />
-        <input
-          onChange={e => setPassword(e.target.value)}
-          name="password"
-          value={password}
-          type="password"
-          placeholder="password"
-        />
-        <hr />
-        <button className="googleBtn" type="button">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-            alt="logo"
-          />
-          Login With Google
-        </button>
-        <button type="submit">Login</button>
-        <span>{error}</span>
-      </form>
+        Login With Google
+      </button>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default withRouter(Login)
